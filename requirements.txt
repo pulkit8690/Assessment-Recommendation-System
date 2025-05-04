@@ -9,3 +9,4 @@ python-dotenv
 google-generativeai
 torch
 gunicorn
+huggingface_hub[hf_xet]
