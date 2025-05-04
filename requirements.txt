@@ -4,11 +4,11 @@
 # numpy
 # requests
 # scikit-learn
-# sentence-transformers
+sentence-transformers
 # faiss-cpu
-# python-dotenv
+python-dotenv
 # google-generativeai
-# torch
+torch
 # gunicorn
 # huggingface_hub[hf_xet]
 streamlit
