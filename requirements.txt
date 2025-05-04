@@ -17,3 +17,5 @@ numpy
 faiss-cpu
 openai
 google-generativeai
+uvicorn
+fastapi
