@@ -19,3 +19,4 @@ openai
 google-generativeai
 uvicorn
 fastapi
+tabulate
