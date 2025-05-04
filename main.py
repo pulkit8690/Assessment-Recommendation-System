@@ -17,14 +17,19 @@ EMB_FILE       = os.path.join(DATA_DIR, "embeddings.npy")
 INDEX_FILE     = os.path.join(DATA_DIR, "faiss_index.bin")
 SKILL_MAP_FILE = os.path.join(DATA_DIR, "skill_map.json")
 
-# ——— LOAD ENV & API KEYS ———
+# ——— LOAD ENV ———
 load_dotenv()
-GEMINI_KEY = os.getenv("GEMINI_API_KEY")
-TOGETHER_KEY   = os.getenv("TOGETHER_API_KEY")
-if not GEMINI_KEY or not TOGETHER_KEY:
-    raise EnvironmentError("Set GEMINI_API_KEY and TOGETHER_API_KEY in your environment")
-genai.configure(api_key=GEMINI_KEY)
 
+# ——— API KEY HANDLING ———
+def get_keys_and_configure():
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    together_key = os.getenv("TOGETHER_API_KEY")
+    if not gemini_key or not together_key:
+        raise EnvironmentError("Set GEMINI_API_KEY and TOGETHER_API_KEY in your environment")
+    genai.configure(api_key=gemini_key)
+    return gemini_key, together_key
+
+GEMINI_KEY, TOGETHER_KEY = get_keys_and_configure()
 
 # ——— LOAD DATA & MODELS ———
 df         = pd.read_csv(CATALOG_CSV)
@@ -118,22 +123,16 @@ def extract_constraints(query: str, engine: str = "gemini") -> dict:
 
     return merge_constraints(safe_json_extract(txt), pre_max)
 
-
-
-# ——— SKILL MAP LOOKUP WITH QUERY FALLBACK ———
+# ——— SKILL MAP LOOKUP ———
 def by_skill_map(query: str, skills: list[str]) -> pd.DataFrame:
     slugs = []
-    # 1) explicit skills from LLM
     for s in skills:
         slugs.extend(SKILL_MAP.get(s.lower(), []))
-
-    # 2) fallback: any skill_map key found in the raw query text
     if not slugs:
         qlow = query.lower()
         for key, vals in SKILL_MAP.items():
             if key in qlow:
                 slugs.extend(vals)
-
     slugs = list(dict.fromkeys(slugs))
     if not slugs:
         return pd.DataFrame()
@@ -192,7 +191,7 @@ def retrieve_assessments(query: str, cons: dict, top_k: int = 10) -> pd.DataFram
 
     return pd.DataFrame()
 
-# ——— MAIN ———
+# ——— MAIN FUNCTION ———
 def recommend(query: str, engine: str = "gemini") -> pd.DataFrame:
     cons   = extract_constraints(query, engine)
     skills = cons.get("skills", [])
@@ -203,15 +202,13 @@ def recommend(query: str, engine: str = "gemini") -> pd.DataFrame:
         return df_map
     return retrieve_assessments(query, cons)
 
+# ——— TEST RUN ———
 if __name__ == "__main__":
     example_query = """
-I am looking for a COO for my 
-company in China and I want to see 
-if they are culturally a right fit for 
-our company. Suggest me an 
-assessment that they can complete 
-in about an hour 
-"""
+    I am looking for a COO for my company in China and I want to see 
+    if they are culturally a right fit for our company. Suggest me an 
+    assessment that they can complete in about an hour 
+    """
     res = recommend(example_query, engine="gemini")
     if res.empty:
         print("⚠️ No assessments matched your criteria.")
