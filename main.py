@@ -1,6 +1,20 @@
+"""
+main.py — Core recommendation logic for SHL Assessment Engine
+Improvements:
+- Preload LLM clients (Gemini & Together)
+- LRU cache for constraint extraction
+- Robust logging on exceptions
+- Startup assertions for data/index consistency
+- Docstrings and type hints
+- Auto-fallback from Gemini to Together on ResourceExhausted
+"""
 import os
 import re
 import json
+import logging
+from functools import lru_cache
+from typing import Optional, Dict, Any, Tuple, List
+
 import pandas as pd
 import numpy as np
 import faiss
@@ -8,21 +22,30 @@ import requests
 from sentence_transformers import SentenceTransformer
 from sklearn.preprocessing import MinMaxScaler
 import google.generativeai as genai
+from google.api_core.exceptions import ResourceExhausted
 from dotenv import load_dotenv
 
-# ——— CONFIG & PATHS ———
-DATA_DIR       = "./data"
+# ——— Configuration & Logging ———
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+# ——— Paths & Constants ———
+DATA_DIR       = os.getenv("DATA_DIR", "./data")
 CATALOG_CSV    = os.path.join(DATA_DIR, "cleaned_catalog.csv")
 EMB_FILE       = os.path.join(DATA_DIR, "embeddings.npy")
 INDEX_FILE     = os.path.join(DATA_DIR, "faiss_index.bin")
 SKILL_MAP_FILE = os.path.join(DATA_DIR, "skill_map.json")
+TOGETHER_URL   = "https://api.together.xyz/v1/completions"
 
-# ——— LOAD ENV ———
+# ——— Load environment & API keys ———
 load_dotenv()
 
-# ——— API KEY HANDLING ———
-def get_keys_and_configure():
-    gemini_key = os.getenv("GEMINI_API_KEY")
+def get_keys_and_configure() -> Tuple[str, str]:
+    """
+    Load Gemini and Together API keys from environment and configure Gemini client.
+    Raises EnvironmentError if missing.
+    """
+    gemini_key   = os.getenv("GEMINI_API_KEY")
     together_key = os.getenv("TOGETHER_API_KEY")
     if not gemini_key or not together_key:
         raise EnvironmentError("Set GEMINI_API_KEY and TOGETHER_API_KEY in your environment")
@@ -30,41 +53,61 @@ def get_keys_and_configure():
     return gemini_key, together_key
 
 GEMINI_KEY, TOGETHER_KEY = get_keys_and_configure()
+# Pre-instantiated LLM clients
+GEMINI_MODEL = genai.GenerativeModel("models/gemini-1.5-pro-latest")
 
-# ——— LOAD DATA & MODELS ———
+# ——— Load Data & Models ———
 df         = pd.read_csv(CATALOG_CSV)
 embeddings = np.load(EMB_FILE)
 index      = faiss.read_index(INDEX_FILE)
 embedder   = SentenceTransformer("all-MiniLM-L6-v2")
 
-# ——— LOAD SKILL MAP ———
+# Startup sanity checks
+assert df.shape[0] == embeddings.shape[0], "Catalog rows != embeddings rows"
+assert index.ntotal == embeddings.shape[0], "FAISS index size mismatch"
+
+# ——— Load Skill Map ———
 with open(SKILL_MAP_FILE) as f:
     SKILL_MAP = {k.lower(): v for k, v in json.load(f).items()}
 
-# ——— HELPERS ———
-def parse_duration(text: str) -> int | None:
+# ——— Helper Functions ———
+
+def parse_duration(text: str) -> Optional[int]:
+    """
+    Extract hours/minutes from free-form text.
+    Returns total minutes or None if nothing found.
+    """
     t = (text or "").lower()
     hrs  = sum(int(h) for h in re.findall(r"(\d+)\s*(?:h|hour)s?", t))
     mins = sum(int(m) for m in re.findall(r"(\d+)\s*(?:m|min)utes?", t))
-    return (hrs * 60 + mins) or None
+    total = hrs * 60 + mins
+    return total if total > 0 else None
 
-def safe_json_extract(txt: str) -> dict:
+
+def safe_json_extract(txt: str) -> Dict[str, Any]:
+    """
+    Find the first JSON object in txt and parse it.
+    Returns empty dict on failure.
+    """
     try:
         body = txt[txt.find("{"): txt.rfind("}")+1]
         return json.loads(body)
-    except:
+    except Exception:
+        logger.exception("Failed to extract JSON from model response")
         return {}
 
-def default_constraints(dur: int|None) -> dict:
+
+def default_constraints(dur: Optional[int]) -> Dict[str, Any]:
     return {
-        "skills": [], 
+        "skills": [],
         "max_duration": dur,
-        "remote_required": "no", 
+        "remote_required": "no",
         "adaptive_required": "no",
         "test_type": None
     }
 
-def merge_constraints(parsed: dict, fallback: int|None) -> dict:
+
+def merge_constraints(parsed: Dict[str, Any], fallback: Optional[int]) -> Dict[str, Any]:
     if not isinstance(parsed, dict):
         return default_constraints(fallback)
     return {
@@ -75,63 +118,73 @@ def merge_constraints(parsed: dict, fallback: int|None) -> dict:
         "test_type":         parsed.get("test_type")
     }
 
-# ——— CONSTRAINT EXTRACTION ———
-PROMPT_TMPL = """
-You are an intelligent assistant helping recruiters choose the right assessments.
+# ——— Constraint Extraction ———
+PROMPT_TMPL = (
+    "You are an intelligent assistant helping recruiters choose the right assessments.\n"
+    "Given a natural language query about a hiring requirement, extract the following details as a valid JSON object:\n"
+    "- \"skills\": A list of technical or soft skills mentioned.\n"
+    "- \"max_duration\": Maximum assessment duration in minutes (integer).\n"
+    "- \"remote_required\": \"yes\" or \"no\".\n"
+    "- \"adaptive_required\": \"yes\" or \"no\".\n"
+    "- \"test_type\": e.g., \"technical\", \"cognitive\", etc.\n\n"
+    "Respond ONLY with a JSON object. No extra text.\n\n"
+    "Query:\n{query}"
+)
 
-Given a natural language query about a hiring requirement, extract the following details as a valid JSON object:
-- "skills": A list of technical or soft skills mentioned.
-- "max_duration": Maximum assessment duration in minutes (integer).
-- "remote_required": "yes" or "no".
-- "adaptive_required": "yes" or "no".
-- "test_type": e.g., "technical", "cognitive", etc.
-
-Respond ONLY with a JSON object. No extra text.
-
-Query:
-{query}
-""".strip()
-
-def extract_constraints(query: str, engine: str = "gemini") -> dict:
+@lru_cache(maxsize=256)
+def extract_constraints(query: str, engine: str = "gemini") -> Dict[str, Any]:
+    """
+    Parse hiring query into structured constraints via LLM.
+    Auto-fallback to Together.ai on Gemini quota exhaustion.
+    """
     pre_max = parse_duration(query)
     prompt  = PROMPT_TMPL.format(query=query)
 
+    def call_together() -> str:
+        headers = {"Authorization": f"Bearer {TOGETHER_KEY}"}
+        payload = {
+            "model":       "mistralai/Mixtral-8x7B-Instruct-v0.1",
+            "prompt":      prompt,
+            "max_tokens":  200,
+            "temperature": 0.3
+        }
+        res = requests.post(TOGETHER_URL, headers=headers, json=payload, timeout=60)
+        res.raise_for_status()
+        return res.json()["choices"][0]["text"]
+
+    txt = ""
     if engine == "gemini":
         try:
-            mdl  = genai.GenerativeModel("models/gemini-1.5-pro-latest")
-            resp = mdl.generate_content(prompt)
+            resp = GEMINI_MODEL.generate_content(prompt)
             txt  = getattr(resp, "text", resp.parts[0].text)
-        except:
+        except ResourceExhausted:
+            logger.warning("Gemini quota exhausted; falling back to Together.ai")
+            txt = call_together()
+        except Exception:
+            logger.exception("Gemini constraint extraction failed")
             return default_constraints(pre_max)
 
     elif engine == "together":
         try:
-            headers = {"Authorization": f"Bearer {TOGETHER_KEY}"}
-            data = {
-                "model": "mistralai/Mixtral-8x7B-Instruct-v0.1",
-                "prompt": prompt,
-                "max_tokens": 200,
-                "temperature": 0.3
-            }
-            r = requests.post("https://api.together.xyz/v1/completions", headers=headers, json=data, timeout=60)
-            txt = r.json()["choices"][0]["text"]
-        except:
+            txt = call_together()
+        except Exception:
+            logger.exception("Together.ai constraint extraction failed")
             return default_constraints(pre_max)
-
     else:
         raise ValueError("Unsupported engine. Use 'gemini' or 'together'.")
 
-    return merge_constraints(safe_json_extract(txt), pre_max)
+    parsed = safe_json_extract(txt)
+    return merge_constraints(parsed, pre_max)
 
-# ——— SKILL MAP LOOKUP ———
-def by_skill_map(query: str, skills: list[str]) -> pd.DataFrame:
-    slugs = []
+# ——— Skill-Map Lookup ———
+def by_skill_map(query: str, skills: List[str]) -> pd.DataFrame:
+    slugs: List[str] = []
     for s in skills:
         slugs.extend(SKILL_MAP.get(s.lower(), []))
     if not slugs:
-        qlow = query.lower()
-        for key, vals in SKILL_MAP.items():
-            if key in qlow:
+        low = query.lower()
+        for k, vals in SKILL_MAP.items():
+            if k in low:
                 slugs.extend(vals)
     slugs = list(dict.fromkeys(slugs))
     if not slugs:
@@ -141,24 +194,26 @@ def by_skill_map(query: str, skills: list[str]) -> pd.DataFrame:
     sub  = df.loc[mask].copy()
     sub.insert(0, "query", query)
     sub["score"] = 1.0
-    return sub[["query"] + list(df.columns) + ["score"]].reset_index(drop=True)
+    return sub.reset_index(drop=True)[["query"] + list(df.columns) + ["score"]]
 
-# ——— FAISS RETRIEVAL & RANKING ———
-def retrieve_assessments(query: str, cons: dict, top_k: int = 10) -> pd.DataFrame:
-    def filter_df(df, cons) -> pd.DataFrame:
-        filt = df.copy()
-        if cons["max_duration"]:
-            filt = filt[filt.duration <= cons["max_duration"]]
-        if cons["remote_required"] == "yes":
-            filt = filt[filt.remote.fillna("no").str.lower() == "yes"]
-        if cons["adaptive_required"] == "yes":
-            filt = filt[filt.adaptive.fillna("no").str.lower() == "yes"]
-        if cons["test_type"]:
-            t = [cons["test_type"]] if isinstance(cons["test_type"], str) else cons["test_type"]
-            filt = filt[filt.test_type.fillna("").str.lower().apply(
-                lambda x: any(tt.lower() in x for tt in t)
-            )]
-        return filt
+# ——— FAISS Retrieval & Ranking ———
+def retrieve_assessments(query: str, cons: Dict[str, Any], top_k: int = 10) -> pd.DataFrame:
+    """
+    Filter catalog per constraints, then rank via FAISS embeddings.
+    Applies up to 4 fallback strategies.
+    """
+    def filter_df(d: pd.DataFrame, c: Dict[str, Any]) -> pd.DataFrame:
+        f = d.copy()
+        if c["max_duration"]:
+            f = f[f.duration <= c["max_duration"]]
+        if c["remote_required"] == "yes":
+            f = f[f.remote.fillna("no").str.lower() == "yes"]
+        if c["adaptive_required"] == "yes":
+            f = f[f.adaptive.fillna("no").str.lower() == "yes"]
+        if c["test_type"]:
+            types = [c["test_type"]] if isinstance(c["test_type"], str) else c["test_type"]
+            f = f[f.test_type.fillna("").str.lower().apply(lambda x: any(t.lower() in x for t in types))]
+        return f
 
     fallback_steps = [
         cons,
@@ -167,50 +222,48 @@ def retrieve_assessments(query: str, cons: dict, top_k: int = 10) -> pd.DataFram
         {**cons, "adaptive_required": "no", "test_type": None, "remote_required": "no"}
     ]
 
-    for fallback in fallback_steps:
-        filt = filter_df(df, fallback)
-        if not filt.empty:
-            print(f"✅ Matched with fallback: {fallback}")
-            qv   = embedder.encode([query], normalize_embeddings=True, convert_to_numpy=True).astype("float32")
+    for fb in fallback_steps:
+        cand = filter_df(df, fb)
+        if not cand.empty:
+            logger.info(f"Matched with fallback: {fb}")
+            qv = embedder.encode([query], normalize_embeddings=True, convert_to_numpy=True).astype("float32")
             D, I = index.search(qv, top_k * 5)
-            hits = []
+            hits: List[Dict[str, Any]] = []
             for dist, idx in zip(D[0], I[0]):
-                if idx in filt.index:
-                    rec = filt.loc[idx].to_dict()
-                    rec["query"] = query
-                    rec["score"] = dist
+                if idx in cand.index:
+                    rec = cand.loc[idx].to_dict()
+                    rec.update({"query": query, "score": dist})
                     hits.append(rec)
                 if len(hits) >= top_k:
                     break
             if hits:
                 out = pd.DataFrame(hits)
                 out["score"] = MinMaxScaler().fit_transform(out[["score"]])
-                return out.sort_values("score", ascending=False)[
-                    ["query"] + list(df.columns) + ["score"]
-                ]
-
+                return out.sort_values("score", ascending=False)[["query"] + list(df.columns) + ["score"]]
     return pd.DataFrame()
 
-# ——— MAIN FUNCTION ———
+# ——— Main API ———
 def recommend(query: str, engine: str = "gemini") -> pd.DataFrame:
+    """
+    Main entry: extract constraints, attempt skill-map lookup, else FAISS retrieval.
+
+    Returns a DataFrame of matching assessments.
+    """
     cons   = extract_constraints(query, engine)
-    skills = cons.get("skills", [])
-    print("🧠 Constraints:", cons)
-    df_map = by_skill_map(query, skills)
+    logger.info(f"Constraints: {cons}")
+    df_map = by_skill_map(query, cons.get("skills", []))
     if not df_map.empty:
-        print("🔧 Skill-map matched slugs")
+        logger.info("Skill-map matched; returning direct mappings")
         return df_map
     return retrieve_assessments(query, cons)
 
-# ——— TEST RUN ———
+# ——— Test Run ———
 if __name__ == "__main__":
-    example_query = """
-    I am looking for a COO for my company in China and I want to see 
-    if they are culturally a right fit for our company. Suggest me an 
-    assessment that they can complete in about an hour 
+    sample = """
+    I need a 45-minute adaptive technical test that can be taken remotely.
     """
-    res = recommend(example_query, engine="gemini")
+    res = recommend(sample, engine="gemini")
     if res.empty:
-        print("⚠️ No assessments matched your criteria.")
+        logger.warning("No assessments matched your criteria.")
     else:
         print(res.to_markdown(index=False))

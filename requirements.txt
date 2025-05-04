@@ -10,3 +10,4 @@ google-generativeai
 torch
 gunicorn
 huggingface_hub[hf_xet]
+flask_cors
