@@ -101,6 +101,5 @@ def toggle_dark():
 
 # ——— Run ———
 if __name__ == '__main__':
-    app.run(
-        host=app.config['HOST'], port=app.config['PORT'], debug=app.config['DEBUG']
-    )
+    port = int(os.environ.get('PORT', 3000))  # Replit expects port 3000
+    app.run(host='0.0.0.0', port=port, debug=app.config['DEBUG'])
