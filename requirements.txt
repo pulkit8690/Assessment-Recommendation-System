@@ -1,13 +1,19 @@
-flask
+# flask
+# flask_cors
+# pandas
+# numpy
+# requests
+# scikit-learn
+# sentence-transformers
+# faiss-cpu
+# python-dotenv
+# google-generativeai
+# torch
+# gunicorn
+# huggingface_hub[hf_xet]
+streamlit
 pandas
 numpy
-requests
-scikit-learn
-sentence-transformers
 faiss-cpu
-python-dotenv
+openai
 google-generativeai
-torch
-gunicorn
-huggingface_hub[hf_xet]
-flask_cors
