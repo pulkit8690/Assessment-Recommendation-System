@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SHL Assessment Recommendation Engine</title>
+  
+  <!-- Favicon (.ico or .png from static/) -->
+  <!-- <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}"> -->
+  <!-- Optional: for PNG -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicon.png') }}">
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --card: #f9f9f9;
+      --accent: #007bff;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #f0f0f0;
+      --card: #1e1e1e;
+      --accent: #66b0ff;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      transition: all 0.3s ease;
+    }
+
+    header, footer {
+      background: var(--card);
+      text-align: center;
+      padding: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .toggle-container {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+    }
+
+    main {
+      max-width: 960px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    textarea, select, button {
+      width: 100%;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background: var(--card);
+      color: var(--text);
+    }
+
+    button {
+      background-color: var(--accent);
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      background: var(--card);
+    }
+
+    th, td {
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background: #eee;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid var(--accent);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 2rem auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .no-results {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .no-results img {
+      max-width: 200px;
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      table, thead {
+        display: none;
+      }
+
+      tbody {
+        display: block;
+      }
+
+      tr {
+        display: block;
+        background: var(--card);
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        padding: 1rem;
+      }
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+
+      td:last-child {
+        border-bottom: none;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--text);
+      }
+
+      td a {
+        word-break: break-word;
+      }
+    }
+  </style>
+</head>
+<body class="{% if dark_mode %}dark{% endif %}">
+
+<div class="toggle-container">
+  <label>
+    🌙 Dark Mode
+    <input type="checkbox" id="darkToggle" onchange="document.body.classList.toggle('dark')">
+  </label>
+</div>
+
+<header style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
+    <img src="{{ url_for('static', filename='favicon.png') }}" alt="App Icon" width="40" height="40" style="border-radius: 8px;" />
+    <h1 style="margin: 0;">SHL Assessment Recommendation Engine</h1>
+  </header>
+  
+
+<main>
+  <form method="POST">
+    <label for="query"><strong>Enter your hiring query:</strong></label>
+    <textarea id="query" name="query" rows="5" required>{{ query }}</textarea>
+
+    <label for="model"><strong>Select AI Model:</strong></label>
+    <select id="model" name="model">
+      <option value="gemini" {% if model == 'gemini' %}selected{% endif %}>Gemini</option>
+      <option value="together" {% if model == 'together' %}selected{% endif %}>Together AI</option>
+    </select>
+
+    <button type="submit">
+      {% if is_loading %}Finding Assessments...{% else %}Find Matching Assessments{% endif %}
+    </button>
+  </form>
+
+  {% if is_loading %}
+    <div class="spinner"></div>
+  {% elif results %}
+    <table>
+      <thead>
+        <tr>
+          <th>Assessment Name</th>
+          <th>Duration</th>
+          <th>Remote</th>
+          <th>Test Type</th>
+          <th>URL</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results %}
+          <tr>
+            <td data-label="Assessment Name">{{ row.assessment_name }}</td>
+            <td data-label="Duration">{{ row.duration }}</td>
+            <td data-label="Remote">{{ row.remote }}</td>
+            <td data-label="Test Type">{{ row.test_type if row.test_type and row.test_type != "nan" else "—" }}</td>
+            <td data-label="URL">
+              {% if row.relative_url %}
+                <a href="{{ row.relative_url }}" target="_blank">Link</a>
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif results is not none %}
+    <div class="no-results">
+      <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?w=800&q=80" alt="No results" />
+      <p><strong>No matching assessments found.</strong></p>
+      <p>Try refining your query or selecting a different model.</p>
+    </div>
+  {% endif %}
+</main>
+
+<footer>
+  <p>
+    Made by 
+    <a href="https://www.linkedin.com/in/pulkit-arora-731b17227/" target="_blank" style="color: var(--accent); text-decoration: none;">
+      Pulkit Arora
+    </a> 
+    • Built with ❤️ using Flask and AI APIs
+  </p>
+</footer>
+
+</body>
+</html>

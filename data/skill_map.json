@@ -1,0 +1,161 @@
+{
+    "automation": [
+      "automata-selenium",
+      "automata-fix-new",
+      "automata-front-end"
+    ],
+    "javascript": [
+      "javascript-new"
+    ],
+    "html": [
+      "htmlcss-new",
+      "html5-new"
+    ],
+    "css": [
+      "css3-new"
+    ],
+    "selenium": [
+      "selenium-new"
+    ],
+    "sql": [
+      "sql-server-new",
+      "automata-sql-new"
+    ],
+    "manual testing": [
+      "manual-testing-new"
+    ],
+    "administrative": [
+      "administrative-professional-shortform"
+    ],
+    "administration": [
+      "administrative-professional-shortform",
+      "verify-numerical-ability",
+      "financial-professional-shortform",
+      "bank-administrative-assistant-shortform",
+      "general-entry-level-data-entry-7-0-solution",
+      "basic-computer-literacy-windows-10-new"
+    ],
+    "bank administrative": [
+      "bank-administrative-assistant-shortform"
+    ],
+    "assistant admin": [
+      "administrative-professional-shortform",
+      "verify-numerical-ability",
+      "financial-professional-shortform",
+      "bank-administrative-assistant-shortform",
+      "general-entry-level-data-entry-7-0-solution",
+      "basic-computer-literacy-windows-10-new"
+    ],
+    "bank assistant admin": [
+      "administrative-professional-shortform",
+      "verify-numerical-ability",
+      "financial-professional-shortform",
+      "bank-administrative-assistant-shortform",
+      "general-entry-level-data-entry-7-0-solution",
+      "basic-computer-literacy-windows-10-new"
+    ],
+    "admin": [                    
+      "administrative-professional-shortform",
+      "verify-numerical-ability",
+      "financial-professional-shortform",
+      "bank-administrative-assistant-shortform",
+      "general-entry-level-data-entry-7-0-solution",
+      "basic-computer-literacy-windows-10-new"
+    ],
+    "dev": [                         
+      "core-java-entry-level-new",
+      "core-java-advanced-level-new",
+      "java-8-new",
+      "agile-software-development",
+      "automata-fix-new",
+      "technology-professional-8-0-job-focused-assessment",
+      "computer-science-new"
+    ],
+    "numerical ability": [
+      "verify-numerical-ability"
+    ],
+    "financial professional": [
+      "financial-professional-shortform"
+    ],
+    "data entry": [
+      "general-entry-level-data-entry-7-0-solution"
+    ],
+    "computer literacy": [
+      "basic-computer-literacy-windows-10-new"
+    ],
+    "verbal ability": [
+      "verify-verbal-ability-next-generation",
+      "svar-spoken-english-indian-accent-new",
+      "english-comprehension-new"
+    ],
+    "technology professional": [
+      "technology-professional-8-0-job-focused-assessment"
+    ],
+    "computer science": [
+      "computer-science-new"
+    ],
+    "sales": [
+      "entry-level-sales-7-1",
+      "entry-level-sales-sift-out-7-1",
+      "entry-level-sales-solution",
+      "sales-representative-solution",
+      "sales-support-specialist-solution",
+      "technical-sales-associate-solution",
+      "svar-spoken-english-indian-accent-new",
+      "sales-and-service-phone-solution",
+      "sales-and-service-phone-simulation",
+      "english-comprehension-new"
+    ],
+    "cultural fit": [
+      "motivation-questionnaire-mqm5",
+      "global-skills-assessment",
+      "graduate-8-0-job-focused-assessment-4228"
+    ],
+    "drupal": [
+      "drupal-new"
+    ],
+    "seo": [
+      "search-engine-optimization-new"
+    ],
+    "inductive reasoning": [
+      "shl-verify-interactive-inductive-reasoning"
+    ],
+    "personality": [
+      "occupational-personality-questionnaire-opq32r"
+    ],
+    "java developer": [
+      "core-java-entry-level-new",
+      "core-java-advanced-level-new",
+      "java-8-new",
+      "agile-software-development",
+      "automata-fix-new",
+      "technology-professional-8-0-job-focused-assessment",
+      "computer-science-new"
+    ],
+    "content writing": [
+      "search-engine-optimization-new",
+      "drupal-new",
+      "administrative-professional-shortform",
+      "entry-level-sales-sift-out-7-1",
+      "general-entry-level-data-entry-7-0-solution"
+    ],
+    "qa engineer": [
+      "automata-selenium",
+      "automata-fix-new",
+      "automata-front-end",
+      "manual-testing-new",
+      "selenium-new",
+      "javascript-new",
+      "htmlcss-new",
+      "html5-new",
+      "css3-new",
+      "sql-server-new",
+      "automata-sql-new"
+    ],
+    "brand leadership": [
+      "verify-verbal-ability-next-generation",
+      "shl-verify-interactive-inductive-reasoning",
+      "occupational-personality-questionnaire-opq32r"
+    ]
+  }
+  

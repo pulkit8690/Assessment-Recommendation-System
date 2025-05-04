@@ -1,0 +1,365 @@
+data-entity-id,Assessment Name,Remote Testing,Adaptive/IRT,Test Type,Assessment Length
+3827,.NET Framework 4.5,Yes,Yes,Knowledge & Skills,30.0
+4094,.NET MVC (New),Yes,No,Knowledge & Skills,17.0
+4099,.NET MVVM (New),Yes,No,Knowledge & Skills,5.0
+4018,.NET WCF (New),Yes,No,Knowledge & Skills,11.0
+4016,.NET WPF (New),Yes,No,Knowledge & Skills,9.0
+4165,.NET XAML (New),Yes,No,Knowledge & Skills,5.0
+4178,Accounts Payable (New),Yes,No,Knowledge & Skills,9.0
+4187,Accounts Payable Simulation (New),Yes,No,Simulations,8.0
+4179,Accounts Receivable (New),Yes,No,Knowledge & Skills,13.0
+4188,Accounts Receivable Simulation (New),Yes,No,Simulations,8.0
+4168,ADO.NET (New),Yes,No,Knowledge & Skills,10.0
+4019,Adobe Experience Manager (New),Yes,No,Knowledge & Skills,17.0
+3778,Adobe Photoshop CC,Yes,Yes,Knowledge & Skills,20.0
+4069,Aeronautical Engineering (New),Yes,No,Knowledge & Skills,10.0
+4004,Aerospace Engineering (New),Yes,No,Knowledge & Skills,10.0
+4223,Agile Software Development,Yes,No,Knowledge & Skills,
+4159,Agile Testing (New),Yes,No,Knowledge & Skills,13.0
+4311,AI Skills,Yes,No,Personality & Behavior,16.0
+4028,Amazon Web Services (AWS) Development (New),Yes,No,Knowledge & Skills,6.0
+4160,Android Development (New),Yes,No,Knowledge & Skills,7.0
+4153,Angular 6 (New),Yes,No,Knowledge & Skills,11.0
+4021,AngularJS (New),Yes,No,Knowledge & Skills,9.0
+4030,Apache Hadoop (New),Yes,No,Knowledge & Skills,7.0
+4011,Apache Hadoop Extensions (New),Yes,No,Knowledge & Skills,9.0
+4073,Apache HBase (New),Yes,No,Knowledge & Skills,5.0
+4075,Apache Hive (New),Yes,No,Knowledge & Skills,5.0
+4022,Apache Kafka (New),Yes,No,Knowledge & Skills,6.0
+4115,Apache Pig (New),Yes,No,Knowledge & Skills,6.0
+4023,Apache Spark (New),Yes,No,Knowledge & Skills,8.0
+4017,ASP .NET with C# (New),Yes,No,Knowledge & Skills,13.0
+3786,ASP.NET 4.5,Yes,Yes,Knowledge & Skills,30.0
+4219,Assessment and Development Center Exercises,Yes,No,Assessment Exercises,
+3980,Automata - Fix (New),Yes,No,Simulations,20.0
+3981,Automata - SQL (New),Yes,No,Simulations,30.0
+3984,Automata (New),Yes,No,Simulations,45.0
+3982,Automata Data Science (New),Yes,No,Simulations,60.0
+3983,Automata Data Science Pro (New),Yes,No,Simulations,60.0
+4222,Automata Front End,Yes,No,Simulations,
+3985,Automata Pro (New),Yes,No,Simulations,60.0
+4229,Automata Selenium,Yes,No,Simulations,60.0
+4026,Automation Anywhere RPA Development (New),Yes,No,Knowledge & Skills,8.0
+4025,Automotive Engineering (New),Yes,No,Knowledge & Skills,13.0
+3988,Basic Biology (New),Yes,No,Knowledge & Skills,6.0
+4206,Basic Computer Literacy (Windows 10) (New),Yes,No,,30.0
+4149,Basic Statistics (New),Yes,No,Knowledge & Skills,10.0
+4161,Biochemistry (New),Yes,No,Knowledge & Skills,8.0
+4036,Biotech Lab Techniques (New),Yes,No,Knowledge & Skills,5.0
+4037,BizTalk (New),Yes,No,Knowledge & Skills,16.0
+244,Business Communication (adaptive),Yes,Yes,Knowledge & Skills,24.0
+536,Business Communications,Yes,No,Knowledge & Skills,35.0
+4038,C Programming (New),Yes,No,Knowledge & Skills,10.0
+4039,C# Programming (New),Yes,No,Knowledge & Skills,9.0
+4122,C++ Programming (New),Yes,No,Knowledge & Skills,10.0
+4077,Cardiology and Diabetes Management (New),Yes,No,Knowledge & Skills,4.0
+4044,Ceramic Engineering (New),Yes,No,Knowledge & Skills,12.0
+4012,Chemical Engineering (New),Yes,No,Knowledge & Skills,13.0
+4024,Cisco AppDynamics (New),Yes,No,Knowledge & Skills,9.0
+4150,Civil Engineering (New),Yes,No,Knowledge & Skills,10.0
+4045,Cloud Computing (New),Yes,No,Knowledge & Skills,8.0
+4046,COBOL Programming (New),Yes,No,Knowledge & Skills,10.0
+4104,Computer Science (New),Yes,No,Knowledge & Skills,12.0
+4189,Contact Center Call Simulation (New),Yes,No,Simulations,15.0
+4296,Conversational Multichat Simulation,Yes,No,Simulations,11.0
+4034,Core Java (Advanced Level) (New),Yes,No,Knowledge & Skills,13.0
+4032,Core Java (Entry Level) (New),Yes,No,Knowledge & Skills,13.0
+3458,Count Out The Money,Yes,Yes,,5.0
+4052,CSS3 (New),Yes,No,Knowledge & Skills,8.0
+4050,Culinary Skills (New),Yes,No,Knowledge & Skills,7.0
+3933,Customer Service Phone Simulation,Yes,No,,20.0
+3931,Customer Service Phone Solution,Yes,No,,30.0
+4053,Cyber Risk (New),Yes,No,Knowledge & Skills,9.0
+4186,Data Entry (New),Yes,No,Simulations,4.0
+778,Data Entry Alphanumeric Split Screen - US,Yes,No,Knowledge & Skills,5.0
+779,Data Entry Numeric Split Screen - US,Yes,No,Knowledge & Skills,5.0
+785,Data Entry Ten Key Split Screen,Yes,No,Knowledge & Skills,3.0
+4013,Data Science (New),Yes,No,Knowledge & Skills,14.0
+56,Data Warehousing Concepts,Yes,Yes,Knowledge & Skills,25.0
+731,Dependability and Safety Instrument (DSI),Yes,No,Personality & Behavior,10.0
+4162,Dermatology (New),Yes,No,Knowledge & Skills,3.0
+4101,Desktop Support (New),Yes,No,Knowledge & Skills,8.0
+4003,Digital Advertising (New),Yes,No,Knowledge & Skills,7.0
+4221,Digital Readiness Development Report - IC,Yes,No,Personality & Behavior,
+4239,Digital Readiness Development Report - Manager,Yes,No,Personality & Behavior,
+4059,Docker (New),Yes,No,Knowledge & Skills,10.0
+4060,Dojo (New),Yes,No,Knowledge & Skills,11.0
+4062,Drupal (New),Yes,No,Knowledge & Skills,17.0
+1102,DSI v1.1 Interpretation Report,Yes,No,Personality & Behavior,
+4148,Econometrics (New),Yes,No,Knowledge & Skills,11.0
+4009,Economics (New),Yes,No,Knowledge & Skills,13.0
+4001,Electrical and Electronics Engineering (New),Yes,No,Knowledge & Skills,14.0
+4031,Electrical Engineering (New),Yes,No,Knowledge & Skills,8.0
+4002,Electronics & Telecommunications Engineering (New),Yes,No,Knowledge & Skills,15.0
+4000,Electronics and Embedded Systems Engineering (New),Yes,No,Knowledge & Skills,18.0
+4139,Electronics and Semiconductor Engineering (New),Yes,No,Knowledge & Skills,7.0
+4180,English Comprehension (New),Yes,No,Knowledge & Skills,0.0
+4063,Enterprise Java Beans (New),Yes,No,Knowledge & Skills,4.0
+3856,Enterprise Leadership Report 1.0,Yes,No,Personality & Behavior,
+4287,Enterprise Leadership Report 2.0,Yes,No,Personality & Behavior,
+3934,Entry Level Cashier Solution,Yes,No,,19.0
+3939,Entry Level Customer Serv-Retail & Contact Center,Yes,No,,19.0
+3935,Entry Level Customer Service (General) Solution,Yes,No,,14.0
+3936,Entry Level Hotel Front Desk Solution,Yes,No,,20.0
+3937,Entry Level Sales Solution,Yes,No,,20.0
+3938,Entry Level Technical Support Solution,Yes,No,,18.0
+4065,ETL Testing (New),Yes,No,Knowledge & Skills,9.0
+743,Executive Scenarios,Yes,No,Biodata & Situational Judgement,
+3849,Executive Scenarios Narrative Report,Yes,No,Biodata & Situational Judgement,
+3899,Executive Scenarios Profile Report,Yes,No,Biodata & Situational Judgement,
+4127,ExpressJS (New),Yes,No,Knowledge & Skills,7.0
+380,Filing - Names (R1),Yes,No,Knowledge & Skills,3.0
+381,Filing - Numbers,Yes,No,Knowledge & Skills,3.0
+3992,Financial Accounting (New),Yes,No,Knowledge & Skills,9.0
+4083,Financial and Banking Services (New),Yes,No,Knowledge & Skills,9.0
+4067,Fire Engineering (New),Yes,No,Knowledge & Skills,10.0
+382,Following Instructions v1 - UK (R1),Yes,No,Knowledge & Skills,8.0
+383,Following Instructions v1 - US (R2),Yes,No,Knowledge & Skills,8.0
+4090,Food and Beverage Services (New),Yes,No,Knowledge & Skills,7.0
+4071,Food Science (New),Yes,No,Knowledge & Skills,6.0
+4072,Front Office Management (New),Yes,No,Knowledge & Skills,7.0
+4113,Fundamentals of Chemistry (New),Yes,No,Knowledge & Skills,8.0
+4043,Fundamentals of Physics (New),Yes,No,Knowledge & Skills,8.0
+4048,General Diseases (New),Yes,No,Knowledge & Skills,5.0
+4125,Geoinformatics Engineering (New),Yes,No,Knowledge & Skills,10.0
+4066,Geoscience Engineering (New),Yes,No,Knowledge & Skills,8.0
+4078,GIT (New),Yes,No,Knowledge & Skills,13.0
+4301,Global Skills Assessment,Yes,No,,16.0
+741,Graduate Scenarios,Yes,No,Biodata & Situational Judgement,
+3900,Graduate Scenarios Narrative Report,Yes,No,Biodata & Situational Judgement,
+3901,Graduate Scenarios Profile Report,Yes,No,Biodata & Situational Judgement,
+4074,Hibernate (New),Yes,No,Knowledge & Skills,5.0
+331,HIPAA (Security),Yes,Yes,Knowledge & Skills,35.0
+3845,HiPo Assessment Report 1.0,Yes,No,,
+4284,HiPo Assessment Report 2.0,Yes,No,,
+4285,HiPo Unlocking Potential Report 2.0,Yes,No,Competencies,
+4076,Housekeeping (New),Yes,No,Knowledge & Skills,7.0
+4080,HTML/CSS (New),Yes,No,Knowledge & Skills,12.0
+4081,HTML5 (New),Yes,No,Knowledge & Skills,11.0
+3999,Human Resources (New),Yes,No,Knowledge & Skills,8.0
+4169,IBM DataStage (New),Yes,No,Knowledge & Skills,15.0
+4155,IBM Sterling Order Management System (New),Yes,No,Knowledge & Skills,13.0
+4005,Industrial Engineering (New),Yes,No,Knowledge & Skills,9.0
+4054,Informatica (Architecture) (New),Yes,No,Knowledge & Skills,10.0
+4055,Informatica (Developer) (New),Yes,No,Knowledge & Skills,11.0
+4086,Jenkins (New),Yes,No,Knowledge & Skills,6.0
+4085,Job Control Language (New),Yes,No,Knowledge & Skills,10.0
+4087,jQuery (New),Yes,No,Knowledge & Skills,10.0
+4152,Kubernetes (New),Yes,No,Knowledge & Skills,6.0
+3990,Linux Administration (New),Yes,No,Knowledge & Skills,10.0
+4299,Linux Operating System,Yes,No,Knowledge & Skills,15.0
+205,Linux Programming (General),Yes,Yes,Knowledge & Skills,25.0
+4170,Load Runner (New),Yes,No,Knowledge & Skills,6.0
+742,Management Scenarios,Yes,No,Biodata & Situational Judgement,
+3903,Managerial Scenarios Candidate Report,Yes,No,Biodata & Situational Judgement,
+3902,Managerial Scenarios Narrative Report,Yes,No,Biodata & Situational Judgement,
+3904,Managerial Scenarios Profile Report,Yes,No,Biodata & Situational Judgement,
+4157,Manual Testing (New),Yes,No,Knowledge & Skills,10.0
+4291,Manufac. & Indust. - Mechanical & Vigilance 8.0,Yes,No,,49.0
+4293,Manufac. & Indust. - Safety & Dependability 8.0,Yes,No,Personality & Behavior,16.0
+4295,Manufacturing & Industrial - Essential Focus 8.0,Yes,No,Personality & Behavior,16.0
+4292,Manufacturing & Industrial - Mechanical Focus 8.0,Yes,No,,31.0
+4294,Manufacturing & Industrial - Vigilance Focus 8.0,Yes,No,,34.0
+4008,Marketing (New),Yes,No,Knowledge & Skills,9.0
+4089,Maven (New),Yes,No,Knowledge & Skills,7.0
+4006,Mechanical Engineering (New),Yes,No,Knowledge & Skills,7.0
+4176,Mechatronics Engineering (New),Yes,No,Knowledge & Skills,19.0
+4058,Medical Terminology (New),Yes,No,Knowledge & Skills,3.0
+4119,Metallurgical Engineering (New),Yes,No,Knowledge & Skills,10.0
+3951,MFS 360 Enterprise Leadership Report,Yes,No,Development & 360,
+3950,MFS 360 UCF Group Report,Yes,No,Development & 360,
+3949,MFS 360 UCF Performance Potential Dev Tips Report,Yes,No,Development & 360,
+3948,MFS 360 UCF Standard Report,Yes,No,Development & 360,
+4027,Micro Focus Unified Functional Testing (New),Yes,No,Knowledge & Skills,12.0
+4091,Microservices (New),Yes,No,Knowledge & Skills,7.0
+4092,Microsoft Dynamics Development (New),Yes,No,Knowledge & Skills,9.0
+4208,Microsoft Excel 365 - Essentials (New),Yes,No,,30.0
+4207,Microsoft Excel 365 (New),Yes,No,,35.0
+3785,Microsoft Outlook 2013 (adaptive),Yes,Yes,Knowledge & Skills,25.0
+4212,Microsoft PowerPoint 365 - Essentials (New),Yes,No,,25.0
+3789,Microsoft SQL Server 2014 Programming,Yes,Yes,Knowledge & Skills,35.0
+3807,Microsoft Windows Server 2012 Administration,Yes,Yes,Knowledge & Skills,35.0
+4211,Microsoft Word 365 - Essentials (New),Yes,No,,25.0
+4210,Microsoft Word 365 (New),Yes,No,,35.0
+4047,Mineral Engineering (New),Yes,No,Knowledge & Skills,12.0
+4093,Mining Engineering (New),Yes,No,Knowledge & Skills,16.0
+4174,Mobility (New),Yes,No,Knowledge & Skills,9.0
+4096,Molecular Biology (New),Yes,No,Knowledge & Skills,6.0
+4010,MongoDB (New),Yes,No,Knowledge & Skills,7.0
+724,Motivation Questionnaire MQM5,Yes,No,Personality & Behavior,25.0
+1308,MQ Candidate Motivation Report,Yes,No,Personality & Behavior,
+1306,MQ Employee Motivation Report,Yes,No,Personality & Behavior,
+1309,MQ Motivation Report Pack,Yes,No,Personality & Behavior,
+1048,MQ Profile,Yes,No,Personality & Behavior,
+4015,MS Access (New),Yes,No,Knowledge & Skills,7.0
+3993,MS Excel (New),Yes,No,Knowledge & Skills,6.0
+3995,MS Office Basic Computer Literacy (New),Yes,No,Knowledge & Skills,7.0
+4193,MS Office Basic Computer Literacy (Sim) (New),Yes,No,Simulations,5.0
+4097,MS PowerPoint (New),Yes,No,Knowledge & Skills,4.0
+3994,MS Word (New),Yes,No,Knowledge & Skills,4.0
+4098,MuleSoft Development (New),Yes,No,Knowledge & Skills,17.0
+615,Multitasking Ability,Yes,No,,20.0
+4100,Networking and Implementation (New),Yes,No,Knowledge & Skills,7.0
+3997,Node.js (New),Yes,No,Knowledge & Skills,9.0
+4041,Nursing (New),Yes,No,Knowledge & Skills,11.0
+720,Occupational Personality Questionnaire OPQ32r,Yes,No,Personality & Behavior,25.0
+4116,Operations Management (New),Yes,No,Knowledge & Skills,7.0
+727,OPQ Candidate Plus Report,Yes,No,Personality & Behavior,
+4298,OPQ Candidate Report 2.0,Yes,No,Personality & Behavior,
+748,OPQ Emotional Intelligence Report,Yes,No,Personality & Behavior,
+749,OPQ Leadership Report,Yes,No,Personality & Behavior,
+750,OPQ Manager Plus Report,Yes,No,Personality & Behavior,
+4300,OPQ Manager Plus Report 2.0,Yes,No,Personality & Behavior,
+752,OPQ Maximising your Learning Report,Yes,No,Personality & Behavior,
+754,OPQ MQ Sales Report,Yes,No,Personality & Behavior,
+753,OPQ Premium Plus Report,Yes,No,Personality & Behavior,
+4307,OPQ Premium Plus Report 2.0,Yes,No,Personality & Behavior,
+1050,OPQ Profile Report,Yes,No,Personality & Behavior,
+1060,OPQ Team Impact Group Development Report,Yes,No,Personality & Behavior,
+1059,OPQ Team Impact Individual Development Report,Yes,No,Personality & Behavior,
+1058,OPQ Team Impact Selection Report,Yes,No,Personality & Behavior,
+1061,OPQ Team Types & Leadership Styles Profile,Yes,No,Personality & Behavior,
+756,OPQ Team Types and Leadership Styles Report,Yes,No,Personality & Behavior,
+757,OPQ UCF Development Action Planner Report 1.0,Yes,No,Personality & Behavior,
+4286,OPQ UCF Development Action Planner Report 2.0,Yes,No,Personality & Behavior,
+758,OPQ Universal Competency Report 1.0,Yes,No,Personality & Behavior,
+4289,OPQ Universal Competency Report 2.0,Yes,No,Personality & Behavior,
+1067,OPQ User and Managers Report,Yes,No,Personality & Behavior,
+759,OPQ User Report,Yes,No,,
+4106,Oracle DBA (Advanced Level) (New),Yes,No,Knowledge & Skills,12.0
+4105,Oracle DBA (Entry Level) (New),Yes,No,Knowledge & Skills,12.0
+4145,Oracle PL/SQL (New),Yes,No,Knowledge & Skills,11.0
+4156,Oracle WebLogic Server (New),Yes,No,Knowledge & Skills,7.0
+4154,Organic Chemistry (New),Yes,No,Knowledge & Skills,10.0
+4107,Paint Technology (New),Yes,No,Knowledge & Skills,7.0
+3998,Pediatrics (New),Yes,No,Knowledge & Skills,5.0
+4108,Pega Development (New),Yes,No,Knowledge & Skills,17.0
+4109,Perl (New),Yes,No,Knowledge & Skills,9.0
+4070,Petrochemical Engineering (New),Yes,No,Knowledge & Skills,7.0
+4110,Petroleum Engineering (New),Yes,No,Knowledge & Skills,10.0
+4088,Pharmaceutical Analysis (New),Yes,No,Knowledge & Skills,12.0
+4114,Pharmaceutical Chemistry (New),Yes,No,Knowledge & Skills,17.0
+4061,Pharmaceutical Science (New),Yes,No,Knowledge & Skills,7.0
+4111,Pharmaceutics (New),Yes,No,Knowledge & Skills,12.0
+4112,Pharmacology (New),Yes,No,Knowledge & Skills,12.0
+4103,PHP (New),Yes,No,Knowledge & Skills,8.0
+3746,PJM Development Report,Yes,No,,
+3484,PJM Selection Report,Yes,No,,
+4042,Polymer Engineering (New),Yes,No,Knowledge & Skills,8.0
+4118,Power Electronics and Drives (New),Yes,No,Knowledge & Skills,15.0
+4117,Power System Engineering (New),Yes,No,Knowledge & Skills,12.0
+4095,Prism (New),Yes,No,Knowledge & Skills,4.0
+4121,Production and Industrial Engineering (New),Yes,No,Knowledge & Skills,13.0
+4120,Production Engineering (New),Yes,No,Knowledge & Skills,10.0
+219,Programming Concepts,Yes,Yes,Knowledge & Skills,25.0
+3769,Project Management (2013),Yes,Yes,Knowledge & Skills,30.0
+393,Proofreading v1,Yes,No,Knowledge & Skills,6.0
+4123,Python (New),Yes,No,Knowledge & Skills,11.0
+4124,R Programming (New),Yes,No,Knowledge & Skills,13.0
+4177,ReactJS (New),Yes,No,Knowledge & Skills,10.0
+3472,Reading Comprehension - English v1,Yes,Yes,Ability & Aptitude,35.0
+543,Reading Comprehension - Spanish v1,Yes,Yes,Ability & Aptitude,26.0
+3942,Reading Comprehension v2,Yes,Yes,Ability & Aptitude,35.0
+4204,RemoteWorkQ,Yes,No,Competencies,10.0
+4202,RemoteWorkQ Manager Report,Yes,No,Competencies,
+4203,RemoteWorkQ Participant Report,Yes,No,Competencies,
+4126,RESTful Web Services (New),Yes,No,Knowledge & Skills,12.0
+697,Retail Sales and Service Simulation,Yes,No,,30.0
+395,Reviewing Forms - US (R1),Yes,No,Knowledge & Skills,5.0
+4129,Ruby (New),Yes,No,Knowledge & Skills,11.0
+4128,Ruby on Rails (New),Yes,No,Knowledge & Skills,11.0
+3932,Sales & Service Phone Simulation,Yes,No,,20.0
+3930,Sales & Service Phone Solution,Yes,No,,35.0
+726,Sales Interview Guide,Yes,No,,
+725,Sales Profiler Cards,Yes,No,Personality & Behavior,
+4230,Sales Transformation 1.0 - Individual Contributor,Yes,No,Personality & Behavior,
+4283,Sales Transformation 2.0 - Individual Contributor,Yes,No,Personality & Behavior,
+4233,Sales Transformation Report 1.0 - Sales Manager,Yes,No,Personality & Behavior,
+4288,Sales Transformation Report 2.0 - Sales Manager,Yes,No,Personality & Behavior,
+4130,Salesforce Development (New),Yes,No,Knowledge & Skills,15.0
+4131,SAP ABAP (Advanced Level) (New),Yes,No,Knowledge & Skills,12.0
+4132,SAP ABAP (Intermediate Level) (New),Yes,No,Knowledge & Skills,9.0
+4133,SAP Basis (New),Yes,No,Knowledge & Skills,9.0
+4136,SAP Business Objects WebI (New),Yes,No,Knowledge & Skills,10.0
+4134,SAP BW (Business Warehouse) (New),Yes,No,Knowledge & Skills,9.0
+4135,SAP HCM (Human Capital Management) (New),Yes,No,Knowledge & Skills,
+4082,SAP Hybris (New),Yes,No,Knowledge & Skills,20.0
+4137,SAP Materials Management (New),Yes,No,Knowledge & Skills,10.0
+4064,SAP SD (Sales and Distribution) (New),Yes,No,Knowledge & Skills,8.0
+4171,Search Engine Optimization (New),Yes,No,Knowledge & Skills,12.0
+4138,Selenium (New),Yes,No,Knowledge & Skills,10.0
+4140,Shell Scripting (New),Yes,No,Knowledge & Skills,10.0
+3968,SHL Verify Interactive - Inductive Reasoning,Yes,Yes,,20.0
+3947,SHL Verify Interactive – Deductive Reasoning,Yes,Yes,,20.0
+3946,SHL Verify Interactive – Numerical Reasoning,Yes,Yes,,20.0
+3971,SHL Verify Interactive G+,Yes,Yes,Ability & Aptitude,36.0
+3972,SHL Verify Interactive Numerical Calculation,Yes,Yes,Ability & Aptitude,10.0
+4141,Siebel Development (New),Yes,No,Knowledge & Skills,8.0
+4209,Smart Interview Live,Yes,No,Personality & Behavior,
+4218,Smart Interview Live Coding,Yes,No,Knowledge & Skills,
+4205,Smart Interview On Demand,Yes,No,Personality & Behavior,
+4014,Social Media (New),Yes,No,Knowledge & Skills,10.0
+116,Software Business Analysis,Yes,Yes,Knowledge & Skills,30.0
+4142,SonarQube (New),Yes,No,Knowledge & Skills,
+4051,Spelling (U.S.) (New),Yes,No,Knowledge & Skills,0.0
+40,Split Screen Typing Test - Form 1,Yes,No,,6.0
+4143,Spring (New),Yes,No,Knowledge & Skills,9.0
+4144,SQL (New),Yes,No,Knowledge & Skills,9.0
+4035,SQL Server (New),Yes,No,Knowledge & Skills,11.0
+4282,SQL Server Analysis Services (SSAS) (New),Yes,No,Knowledge & Skills,15.0
+4146,SQL Server Integration Services (SSIS) (New),Yes,No,Knowledge & Skills,10.0
+4147,SQL Server Reporting Services (SSRS) (New),Yes,No,Knowledge & Skills,10.0
+3996,Statistical Analysis System (New),Yes,No,Knowledge & Skills,11.0
+4151,Struts (New),Yes,No,Knowledge & Skills,5.0
+4216,SVAR - Spoken English (AUS),Yes,No,Simulations,
+3986,SVAR - Spoken English (Indian Accent)  (New),Yes,No,Simulations,
+4217,SVAR - Spoken English (U.K.),Yes,No,Simulations,
+3987,SVAR - Spoken English (US)  (New),Yes,No,Simulations,
+4197,SVAR - Spoken French (Canadian) (New),Yes,No,Simulations,
+4198,SVAR - Spoken French (European) (New),Yes,No,Simulations,
+4199,SVAR - Spoken Spanish (Castilian) (New),Yes,No,Simulations,
+4200,SVAR - Spoken Spanish (North American) (New),Yes,No,Simulations,
+4049,Swing (New),Yes,No,Knowledge & Skills,4.0
+4079,Tableau (New),Yes,No,Knowledge & Skills,8.0
+4020,Telecommunications Engineering (New),Yes,No,Knowledge & Skills,7.0
+4167,Teradata Development (New),Yes,No,Knowledge & Skills,9.0
+251,Time Management (U.S.),Yes,Yes,Knowledge & Skills,35.0
+336,Training Development,Yes,Yes,Knowledge & Skills,35.0
+4201,Typing (New),Yes,No,Simulations,2.0
+4175,UiPath RPA Development (New),Yes,No,Knowledge & Skills,8.0
+735,Universal Competency Framework Interview Guide,Yes,No,,
+734,Universal Competency Framework Job profiling guide,Yes,No,,
+733,Universal Competency Framework Profiler Cards (44),Yes,No,,
+4172,UNIX (New),Yes,No,Knowledge & Skills,9.0
+4173,VB.NET (New),Yes,No,Knowledge & Skills,10.0
+3733,Verify - Deductive Reasoning,Yes,Yes,Ability & Aptitude,20.0
+3941,Verify - Following Instructions,Yes,No,Ability & Aptitude,8.0
+3908,Verify - G+,Yes,Yes,Ability & Aptitude,36.0
+3734,Verify - General Ability Screen,Yes,Yes,Ability & Aptitude,10.0
+3836,Verify - Inductive Reasoning (2014),Yes,Yes,Ability & Aptitude,24.0
+3745,Verify - Numerical Ability,Yes,Yes,Ability & Aptitude,20.0
+3768,Verify - Technical Checking - Next Generation,Yes,No,Ability & Aptitude,5.0
+3906,Verify - Verbal Ability - Next Generation,Yes,Yes,Ability & Aptitude,
+3940,Verify - Working with Information,Yes,No,Ability & Aptitude,10.0
+3945,Verify G+ - Ability Test Report,Yes,No,Ability & Aptitude,
+3970,Verify G+ - Candidate Report,Yes,No,Ability & Aptitude,
+3969,Verify Interactive Ability Report,Yes,No,Ability & Aptitude,
+3976,Verify Interactive G+ Candidate Report,Yes,No,Ability & Aptitude,
+3974,Verify Interactive G+ Report,Yes,No,Ability & Aptitude,
+4290,Verify Interactive Process Monitoring,Yes,No,Ability & Aptitude,18.0
+4215,Virtual Assessment and Development Centers,Yes,No,Personality & Behavior,
+4163,Visual Basic for Applications (New),Yes,No,Knowledge & Skills,7.0
+399,Visual Comparison - UK,Yes,No,Knowledge & Skills,5.0
+400,Visual Comparison - US,Yes,No,Knowledge & Skills,5.0
+4164,VLSI and Embedded Systems (New),Yes,No,Knowledge & Skills,9.0
+3459,What Is The Value - US,Yes,Yes,Knowledge & Skills,5.0
+3991,Workplace Administration Skills (New),Yes,No,Knowledge & Skills,12.0
+4068,Workplace Health and Safety (New),Yes,No,Knowledge & Skills,9.0
+4183,WriteX - Email Writing (Customer Service) (New),Yes,No,Simulations,15.0
+4184,WriteX - Email Writing (Managerial) (New),Yes,No,Simulations,15.0
+4185,WriteX - Email Writing (Sales) (New),Yes,No,,15.0
+17,Written English v1,Yes,Yes,Knowledge & Skills,30.0
+18,Written Spanish,Yes,Yes,Knowledge & Skills,22.0
+4166,Zabbix (New),Yes,No,Knowledge & Skills,9.0
+4297,360 Digital Report,Yes,No,Development & 360,
+744,360° Multi-Rater Feedback System (MFS),Yes,No,,
