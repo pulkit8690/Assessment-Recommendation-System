@@ -8,7 +8,7 @@ sentence-transformers
 # faiss-cpu
 python-dotenv
 # google-generativeai
-# torch
+torch
 # gunicorn
 # huggingface_hub[hf_xet]
 streamlit
