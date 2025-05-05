@@ -1,9 +1,9 @@
-# shl_recommender_app.py
+# shl_recommender_app.py  ── run with:  streamlit run shl_recommender_app.py
 import streamlit as st
 import pandas as pd
 import math
 import warnings
-from main import recommend, get_keys_and_configure   # <- your own modules
+from main import recommend, get_keys_and_configure   # ← your own modules
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -36,78 +36,86 @@ query = st.text_area("Enter Job Description", height=200)
 if st.button("Get Recommendations"):
     if not query.strip():
         st.warning("⚠️ Please enter a job description.")
-    else:
-        try:
-            # 4‑A. Call your recommender
-            df_raw = recommend(query, engine=model)
+        st.stop()
 
-            # 4‑B. Normalise & select columns
-            records = []
-            for rec in df_raw.to_dict(orient="records"):
-                # replace NaN floats with None
-                for k, v in rec.items():
-                    if isinstance(v, float) and math.isnan(v):
-                        rec[k] = None
-                records.append(
-                    {
-                        "Assessment Name": rec.get("assessment_name"),
-                        "Duration":         rec.get("duration"),
-                        "Remote":           rec.get("remote"),
-                        "Adaptive Support": rec.get("adaptive"),
-                        "Test Type":        rec.get("test_type") or "–",
-                        "URL":              rec.get("relative_url"),
-                    }
-                )
+    try:
+        # 4‑A. Call your recommender
+        df_raw = recommend(query, engine=model)
 
-            if not records:
-                st.info("No recommendations found.")
-                st.stop()
-
-            # 4‑C. Build a DataFrame
-            df_display = pd.DataFrame(records)[
-                [
-                    "Assessment Name",
-                    "Duration",
-                    "Remote",
-                    "Adaptive Support",
-                    "Test Type",
-                    "URL",
-                ]
-            ].fillna("–")
-
-            # 4‑D. Turn URL column into clickable <a>
-            df_display["URL"] = df_display["URL"].apply(
-                lambda u: f'<a href="{u}" target="_blank">Link</a>' if u else "–"
-            )
-
-            # 4‑E. Convert to HTML (escape=False keeps the <a> tags)
-            table_html = df_display.to_html(
-                index=False,
-                escape=False,
-                classes="shl-table",
-            )
-
-            # 4‑F. Inject a tiny bit of CSS once, then the table
-            st.markdown(
-                """
-                <style>
-                .shl-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    font-size: 0.94rem;
+        # 4‑B. Build records with serial numbers
+        records = []
+        for i, rec in enumerate(df_raw.to_dict(orient="records"), start=1):
+            # replace NaN floats with None
+            for k, v in rec.items():
+                if isinstance(v, float) and math.isnan(v):
+                    rec[k] = None
+            records.append(
+                {
+                    "#":                i,                       # serial number
+                    "Assessment Name": rec.get("assessment_name"),
+                    "Duration":         rec.get("duration"),
+                    "Remote":           rec.get("remote"),
+                    "Adaptive Support": rec.get("adaptive"),
+                    "Test Type":        rec.get("test_type") or "–",
+                    "URL":              rec.get("relative_url"),
                 }
-                .shl-table th, .shl-table td {
-                    padding: 8px 10px;
-                    border-bottom: 1px solid #ddd;
-                    text-align: left;
-                }
-                .shl-table th {background: #f2f2f2;}
-                .shl-table td a {color: #1a73e8; text-decoration: none;}
-                </style>
-                """,
-                unsafe_allow_html=True,
             )
-            st.markdown(table_html, unsafe_allow_html=True)
 
-        except Exception as e:
-            st.exception(f"🚫 An error occurred:\n{e}")
+        if not records:
+            st.info("No recommendations found.")
+            st.stop()
+
+        # 4‑C. Build HTML table manually (keeps full control over header colours)
+        table_html = """
+        <style>
+        /* ——— dark‑friendly table style ——— */
+        .shl-table            {width: 100%; border-collapse: collapse; font-size: 0.95rem;}
+        .shl-table th         {background: #4c4f54; color: #ffffff; padding: 8px 10px; text-align: left;}
+        .shl-table td         {padding: 8px 10px; text-align: left;}
+        .shl-table tr:nth-child(odd)  {background: #1e1e1e;}  /* dark row */
+        .shl-table tr:nth-child(even) {background: #2a2d32;}  /* slightly lighter */
+        .shl-table td, .shl-table th  {border-bottom: 1px solid #3a3a3a;}
+        .shl-table td a       {color: #1e90ff; text-decoration: none;}
+        /* Fallback for light theme (if user switches) */
+        @media (prefers-color-scheme: light) {
+            .shl-table tr:nth-child(odd)  {background: #ffffff;}
+            .shl-table tr:nth-child(even) {background: #f6f6f6;}
+            .shl-table th                 {background: #f2f2f2; color: #222;}
+            .shl-table td                 {color: #222;}
+        }
+        </style>
+        <table class="shl-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Assessment Name</th>
+              <th>Duration</th>
+              <th>Remote</th>
+              <th>Adaptive Support</th>
+              <th>Test Type</th>
+              <th>URL</th>
+            </tr>
+          </thead>
+          <tbody>
+        """
+
+        for row in records:
+            table_html += f"""
+              <tr>
+                <td>{row['#']}</td>
+                <td>{row['Assessment Name']}</td>
+                <td>{row['Duration']}</td>
+                <td>{row['Remote']}</td>
+                <td>{row['Adaptive Support']}</td>
+                <td>{row['Test Type']}</td>
+                <td><a href="{row['URL']}" target="_blank">Link</a></td>
+              </tr>
+            """
+
+        table_html += "</tbody></table>"
+
+        # 4‑D. Render
+        st.markdown(table_html, unsafe_allow_html=True)
+
+    except Exception as e:
+        st.exception(f"🚫 An error occurred:\n{e}")
