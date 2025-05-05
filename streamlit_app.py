@@ -1,4 +1,4 @@
-# shl_recommender_app.py
+# shl_recommender_app.py  ── run with:  streamlit run shl_recommender_app.py
 import streamlit as st
 import pandas as pd
 import math
@@ -8,7 +8,7 @@ from main import recommend, get_keys_and_configure   # ← your own modules
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # ────────────────────────────────────────────────────────────────
-# 1. Page config
+# 1. Page‑level config
 # ────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="SHL Assessment Recommender", layout="wide")
 
@@ -22,7 +22,7 @@ except Exception as e:
     st.sidebar.error(f"❌ Failed to load API keys:\n{e}")
 
 # ────────────────────────────────────────────────────────────────
-# 3. Sidebar options
+# 3. Sidebar – choose LLM back‑end
 # ────────────────────────────────────────────────────────────────
 st.sidebar.header("⚙️  Options")
 model = st.sidebar.selectbox("Choose Model", ["gemini", "together"])
@@ -64,22 +64,27 @@ if st.button("Get Recommendations"):
             st.info("No recommendations found.")
             st.stop()
 
-        # 4‑C. Build HTML table
+        # 4‑C. Build HTML table with high‑contrast colours
         table_html = """
         <style>
+        /* ------------- dark theme (default in Streamlit desktop) ------------- */
         .shl-table            {width: 100%; border-collapse: collapse; font-size: 0.95rem;}
-        .shl-table th         {background: #4c4f54; color: #ffffff; padding: 8px 10px; text-align: left;}
-        .shl-table td         {padding: 8px 10px; text-align: left;}
+        .shl-table th         {background: #36393f; color: #ffffff; padding: 10px; text-align: left;}
+        .shl-table td         {padding: 9px 10px; color: #eaeaea;}
         .shl-table tr:nth-child(odd)  {background: #1e1e1e;}
-        .shl-table tr:nth-child(even) {background: #2a2d32;}
-        .shl-table td, .shl-table th  {border-bottom: 1px solid #3a3a3a;}
-        .shl-table td a       {color: #1e90ff; text-decoration: none;}
+        .shl-table tr:nth-child(even) {background: #26282c;}
+        .shl-table td, .shl-table th  {border-bottom: 1px solid #4a4a4a;}
+        .shl-table td a       {color: #3ea6ff; text-decoration: none;}
+        .shl-table td a:hover {text-decoration: underline;}
 
+        /* ------------- light theme override ------------- */
         @media (prefers-color-scheme: light) {
+            .shl-table th         {background: #f2f2f2; color: #222;}
+            .shl-table td         {color: #222;}
             .shl-table tr:nth-child(odd)  {background: #ffffff;}
-            .shl-table tr:nth-child(even) {background: #f6f6f6;}
-            .shl-table th                 {background: #f2f2f2; color: #222;}
-            .shl-table td                 {color: #222;}
+            .shl-table tr:nth-child(even) {background: #f7f7f7;}
+            .shl-table td, .shl-table th  {border-bottom: 1px solid #dddddd;}
+            .shl-table td a       {color: #1a0dab;}
         }
         </style>
 
@@ -113,7 +118,7 @@ if st.button("Get Recommendations"):
 
         table_html += "</tbody></table>"
 
-        # 4‑D. Render HTML via components (guaranteed to render, no escaping)
+        # 4‑D. Render inside iframe for guaranteed HTML rendering
         st.components.v1.html(table_html, height=600, scrolling=True)
 
     except Exception as e:
