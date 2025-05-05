@@ -1,4 +1,4 @@
-# shl_recommender_app.py  ── run with:  streamlit run shl_recommender_app.py
+# shl_recommender_app.py
 import streamlit as st
 import pandas as pd
 import math
@@ -8,7 +8,7 @@ from main import recommend, get_keys_and_configure   # ← your own modules
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # ────────────────────────────────────────────────────────────────
-# 1. Page‑level config
+# 1. Page config
 # ────────────────────────────────────────────────────────────────
 st.set_page_config(page_title="SHL Assessment Recommender", layout="wide")
 
@@ -22,9 +22,9 @@ except Exception as e:
     st.sidebar.error(f"❌ Failed to load API keys:\n{e}")
 
 # ────────────────────────────────────────────────────────────────
-# 3. Sidebar – choose LLM back‑end
+# 3. Sidebar options
 # ────────────────────────────────────────────────────────────────
-st.sidebar.header("⚙️ Options")
+st.sidebar.header("⚙️  Options")
 model = st.sidebar.selectbox("Choose Model", ["gemini", "together"])
 
 # ────────────────────────────────────────────────────────────────
@@ -35,23 +35,22 @@ query = st.text_area("Enter Job Description", height=200)
 
 if st.button("Get Recommendations"):
     if not query.strip():
-        st.warning("⚠️ Please enter a job description.")
+        st.warning("⚠️  Please enter a job description.")
         st.stop()
 
     try:
-        # 4‑A. Call your recommender
+        # 4‑A. Call recommender
         df_raw = recommend(query, engine=model)
 
-        # 4‑B. Build records with serial numbers
+        # 4‑B. Build list of dicts with serial numbers
         records = []
-        for i, rec in enumerate(df_raw.to_dict(orient="records"), start=1):
-            # replace NaN floats with None
+        for idx, rec in enumerate(df_raw.to_dict(orient="records"), start=1):
             for k, v in rec.items():
                 if isinstance(v, float) and math.isnan(v):
                     rec[k] = None
             records.append(
                 {
-                    "#":                i,                       # serial number
+                    "#":                idx,
                     "Assessment Name": rec.get("assessment_name"),
                     "Duration":         rec.get("duration"),
                     "Remote":           rec.get("remote"),
@@ -65,18 +64,17 @@ if st.button("Get Recommendations"):
             st.info("No recommendations found.")
             st.stop()
 
-        # 4‑C. Build HTML table manually (keeps full control over header colours)
+        # 4‑C. Build HTML table
         table_html = """
         <style>
-        /* ——— dark‑friendly table style ——— */
         .shl-table            {width: 100%; border-collapse: collapse; font-size: 0.95rem;}
         .shl-table th         {background: #4c4f54; color: #ffffff; padding: 8px 10px; text-align: left;}
         .shl-table td         {padding: 8px 10px; text-align: left;}
-        .shl-table tr:nth-child(odd)  {background: #1e1e1e;}  /* dark row */
-        .shl-table tr:nth-child(even) {background: #2a2d32;}  /* slightly lighter */
+        .shl-table tr:nth-child(odd)  {background: #1e1e1e;}
+        .shl-table tr:nth-child(even) {background: #2a2d32;}
         .shl-table td, .shl-table th  {border-bottom: 1px solid #3a3a3a;}
         .shl-table td a       {color: #1e90ff; text-decoration: none;}
-        /* Fallback for light theme (if user switches) */
+
         @media (prefers-color-scheme: light) {
             .shl-table tr:nth-child(odd)  {background: #ffffff;}
             .shl-table tr:nth-child(even) {background: #f6f6f6;}
@@ -84,6 +82,7 @@ if st.button("Get Recommendations"):
             .shl-table td                 {color: #222;}
         }
         </style>
+
         <table class="shl-table">
           <thead>
             <tr>
@@ -114,8 +113,8 @@ if st.button("Get Recommendations"):
 
         table_html += "</tbody></table>"
 
-        # 4‑D. Render
-        st.markdown(table_html, unsafe_allow_html=True)
+        # 4‑D. Render HTML via components (guaranteed to render, no escaping)
+        st.components.v1.html(table_html, height=600, scrolling=True)
 
     except Exception as e:
         st.exception(f"🚫 An error occurred:\n{e}")
