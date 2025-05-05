@@ -47,44 +47,23 @@ if st.button("Get Recommendations"):
                     "Test Type":      rec.get("test_type") or "–",
                     "URL":            rec.get("relative_url"),
                 })
-            
+
             if not records:
                 st.info("No recommendations found.")
             else:
-                # Render as HTML table with clickable links
-                table_html = """
-                <style>
-                  table {border-collapse: collapse; width:100%;}
-                  th, td {padding:8px; border-bottom:1px solid #ddd; text-align:left;}
-                  th {background:#f2f2f2;}
-                  td a {color:blue;}
-                </style>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Assessment Name</th>
-                      <th>Duration</th>
-                      <th>Remote</th>
-                      <th>Adaptive Support</th>
-                      <th>Test Type</th>
-                      <th>URL</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                """
-                for r in records:
-                    table_html += f"""
-                      <tr>
-                        <td>{r['Assessment Name']}</td>
-                        <td>{r['Duration']}</td>
-                        <td>{r['Remote']}</td>
-                        <td>{r['Adaptive Support']}</td>
-                        <td>{r['Test Type']}</td>
-                        <td><a href="{r['URL']}" target="_blank">Link</a></td>
-                      </tr>
-                    """
-                table_html += "</tbody></table>"
-                st.markdown(table_html, unsafe_allow_html=True)
+                # Create DataFrame
+                df_display = pd.DataFrame(records)
+
+                # Make URL clickable
+                df_display["URL"] = df_display["URL"].apply(lambda url: f"[Link]({url})" if url else "–")
+
+                # Optional: reorder columns
+                df_display = df_display[[
+                    "Assessment Name", "Duration", "Remote", "Adaptive Support", "Test Type", "URL"
+                ]].fillna("–")
+
+                # Display as Streamlit table
+                st.dataframe(df_display, use_container_width=True)
 
         except Exception as e:
             st.exception(f"🚫 An error occurred: {e}")
